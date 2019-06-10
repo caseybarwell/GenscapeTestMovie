@@ -1,0 +1,72 @@
+
+All the files included in this process (included some descriptions) are:
+
+movie_api.py: 
+    Python program contains the bulk of the code used to create a database,
+    create Movie schema, populate the necessary default values,
+    as well as handle both the collection and processing of themoviedb api.
+    By running the program, this assumes the system used to process has 
+    postgres installed with a default postgres database, as well as postgres
+    user as a root like user available, with the password stored in pgpass.conf
+    with the appropriate file/group privileges.  However, as long as postgres is 
+    installed, any user with proper privileges (to create a database etc.) along
+    with another server/database can be used, but there is some modification in
+    the code which needs to be set for this to work.
+
+movie_api_queries.py:
+    This is not a stand alone Python program, but for readability/style, I have
+    seperated out the queries executed in movie_api.py & movie_daily_process.py
+    into this file.  I believe it still should be straightforward to understand
+    how the movie_api.py program works without all the sql code in it.
+
+movie_daily_process.py: 
+    Python program which is meant to run daily to accomplish the goals 
+    in the requirements. I did not provide any scheduling process info but if I 
+    did I would have used chron. This falls out of the scope of requirements however.
+
+createMovieSchema.sql:
+    This is the DDL/SQL file used to create the movie schema.  This does not need to
+    run seperately as the program executes this script as a part of creating the
+    database, schema, and tables
+
+sample_movie_queries.sql:
+    Per the requirements, these are a set of queries developed to ensure that the
+    system built could answer specific questions of the data collected in the database.
+    When there was some ambiguity in the questions, there were comments made in the file
+    so as to clarify assumptions in the requirements.
+
+GenscapeTestMovieAPI.readme.txt:
+    This file
+
+
+The requirements for the operations of program are as follows:
+
+1. You need Python 3 installed on your machine
+2. You need the following libraries installed: 
+  a) json
+  b) requests
+  c) psycopg2
+  I believe everything else is standard Python libraries when you install Python 3.
+3. Special Note -- I programmed this on a mac but believe it is OS agnostic.
+
+
+To operate the process, download the files and install them into a working directory.
+Make sure the user executing the programs have correct privileges with the files to execute.
+There are two main steps, one step of the program needs to only run once (movie_api.py), where as the other
+should be executed daily (movie_daily_process.py).
+
+on the command line go to the directory where the programs have been installed.
+execute the following line
+python3 movie_api.py
+This will build a GenscapeTest database, and create a movie schema with tables in it, 
+as well as necessary default values.
+This should only run once (although it can be run multiple times, it will just destroy 
+any data stored in the database if you do!)
+
+The other program executes similarly:
+python3 movie_daily_process.py
+
+This should run on a daily basis.  The requirements state that there needs a process to be run on
+the first of the month, and this program contains the correct logic in order to accomplish that 
+requirements.
+
